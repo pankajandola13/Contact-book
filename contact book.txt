@@ -1,0 +1,89 @@
+contacts = []
+while True:
+    print("Contact Book Menu:")
+    print("1. Add Contacts")
+    print("2. View Contacts")
+    print("3. Search Contacts")
+    print("4. Update Contacts")
+    print("5. Delete Contacts")
+    print("6. Exit")
+    
+    choice = input("\nEnter your choice: ")
+    if choice == '1':
+        name = input("Enter name: ")
+        phone = input("Enter phone number: ")
+        email = input("Enter email (optional): ")
+        address = input("Enter address (optional): ")
+        contact = {
+            'name':name,
+            'phone':phone,
+            'email':email,
+            'address':address
+        }
+        contacts.append(contact)
+        print(f"\nContact '{name}'added successfully!\n")
+    elif choice =='2':
+        if contacts:
+            print("\nContact List:")
+            for i, contact in enumerate(contacts,start=1):
+                print(f"{i}.{contact['name']} - {contact['phone']}")
+        else:
+            print("\nNo contacts found.\n")
+    elif choice =='3':
+        query = input("\nEnter name or phone number to search:")
+        found_contacts = [c for c in contacts if query in c['name'] or query in c['phone']]
+        if found_contacts:
+            print("\nSearch Results:")
+            for contacts in found_contacts:
+                print(f"{contact['name']} - {contact['phone']} - {contact.get('email','N/A')} - {contact.get('address','N/A')}")
+        else:
+                print("\nNo contacts found.\n")
+    elif choice =='4':
+        if contacts:
+            print("\nContacts List:")
+            for i, contact in enumerate(contacts,start=1):
+                print(f"{i}.{contact['name']} - {contact['phone']}")
+            try:
+                contact_id = int(input("\nEnter the number of the contacts to update:")) - 1
+                if 0 <= contact_id < len(contacts):
+                    print(f"\nUpdating contacts '{contacts[contact_id]['name']}'")
+                    contacts[contact_id]['name'] = input("Enter new name:")
+                    contacts[contact_id]['phone'] = input("Enter new phone number:")                
+                    contacts[contact_id]['email'] = input("Enter new email(optional):")                
+                    contacts[contact_id]['address'] = input("Enter new address(optional):")
+                    print("\nContact updated successfully!\n")
+                else:
+                    print("\nInvalid contact number.\n")
+            except ValueError:
+                print("\nInvalid input. Please enter a number.\n")
+            else:
+                print("\nNo contacts available to update.\n")
+        elif choice == '5':
+            if contacts:
+                print("\nContacts List:")
+                for i, contact in enumerate(contacts,start=1):
+                    print(f"{i}.{contact['name']} - {contact['phone']}")
+        try:
+            contact_id = int(input("\nEnter the number of the contacts to delete:")) - 1
+            if 0 <= contact_id < len(contacts):
+                confirm = input(f"Are you sure you want to delete '{contacts[contact_id]['name']}'?(y/n):")
+                if confirm.lower() == 'y':
+                    deleted_contact = contacts.pop(contact_id)
+                    print(f"\nContact'{deleted_contact['name']}' deleted successfully!\n")
+                else:
+                    print("\nDeletion cancelled.\n")
+            else:
+                print("\nInvalid contact number.\n")
+        except ValueError:
+            print("\nInvalid input. Please enter a number.\n")
+        else:
+            print("\nNo contacts available to delete.\n")
+    elif choice == '6':
+        print("\nExiting Contact Book. Goodbye!")
+        break
+    else:
+        print("\nInvalid choice. Please try again.\n")
+
+
+    
+                               
